@@ -36,18 +36,30 @@ A full-stack AIML project — a Canva + Procreate inspired visual design canvas 
 
 ## Architecture
 
-```
-Browser  (HTML / CSS / JS + Fabric.js)
-    │
-    │  POST /api/ai/proxy
-    ▼
-Python FastAPI  (localhost:8000)        ← API key lives here only
-    │
-    │  POST https://api.openai.com/v1/chat/completions
-    ▼
-OpenAI GPT-4o
-    │
-    └──► JSON response → FastAPI → Browser → canvas updated
+```mermaid
+flowchart TD
+    subgraph Client["🌐 Browser"]
+        direction TB
+        UI["HTML · CSS · JavaScript"]
+        FC["Fabric.js Canvas Engine"]
+        UI <--> FC
+    end
+
+    subgraph Server["⚙️ Python Backend — FastAPI"]
+        direction TB
+        Proxy["POST /api/ai/proxy"]
+        ENV[("🔐 .env\nAPI Key")]
+        ENV -.->|inject| Proxy
+    end
+
+    subgraph OpenAI["🤖 OpenAI"]
+        GPT["GPT-4o"]
+    end
+
+    Client -->|"User prompt + canvas JSON"| Proxy
+    Proxy -->|"Authenticated API call"| GPT
+    GPT -->|"Enhanced design / generated code"| Proxy
+    Proxy -->|"Response"| Client
 ```
 
 ---

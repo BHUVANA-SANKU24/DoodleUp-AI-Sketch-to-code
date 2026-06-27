@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoodleUp! — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="stylesheet" href="css/dashboard.css?v=4" />
+  <style>
+    html { background: #020308; }
+    body { background: transparent; color: #e8e6f0; margin: 0; }
+  </style>
+</head>
+<body>
+
+<div id="cursorGlowPrimary" aria-hidden="true"></div>
+<div id="cursorGlowSecondary" aria-hidden="true"></div>
+
+  <!-- ── Top Nav ─────────────────────────────────────── -->
+  <nav class="topnav">
+    <div class="topnav-left">
+      <a href="index.html" class="doodle-logo">Doodle<span class="logo-up">UP</span><span class="logo-dot">!</span></a>
+      <div class="topnav-links">
+        <a href="dashboard.html" class="topnav-link active">Projects</a>
+        <a href="#" class="topnav-link">Templates</a>
+      </div>
+    </div>
+    <div class="topnav-right">
+      <button id="themeToggle" class="icon-btn" title="Toggle theme">☀</button>
+      <button class="btn btn-primary btn-sm" id="newProjectBtn">+ New project</button>
+      <div class="avatar" id="userAvatar" title="Account">U</div>
+    </div>
+  </nav>
+
+  <!-- ── Sidebar + main ──────────────────────────────── -->
+  <div class="dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <div class="sidebar-section">
+        <span class="sidebar-label">Library</span>
+        <nav class="sidebar-nav">
+          <a href="#" class="sidebar-link active" data-filter="all">
+            <span class="sidebar-icon">⊞</span> All projects
+          </a>
+          <a href="#" class="sidebar-link" data-filter="recent">
+            <span class="sidebar-icon">🕒</span> Recent
+          </a>
+          <a href="#" class="sidebar-link" data-filter="starred">
+            <span class="sidebar-icon">★</span> Starred
+          </a>
+        </nav>
+      </div>
+      <div class="sidebar-section">
+        <span class="sidebar-label">Templates</span>
+        <nav class="sidebar-nav">
+          <a href="#" class="sidebar-link" data-tmpl="saas">
+            <span class="sidebar-icon">🚀</span> SaaS Landing
+          </a>
+          <a href="#" class="sidebar-link" data-tmpl="portfolio">
+            <span class="sidebar-icon">🖼</span> Portfolio
+          </a>
+          <a href="#" class="sidebar-link" data-tmpl="blog">
+            <span class="sidebar-icon">📝</span> Blog
+          </a>
+          <a href="#" class="sidebar-link" data-tmpl="dashboard">
+            <span class="sidebar-icon">📊</span> App Dashboard
+          </a>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link sidebar-logout" id="logoutBtn">
+          <span class="sidebar-icon">→</span> Log out
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dash-main">
+
+      <!-- Header row -->
+      <div class="dash-header">
+        <div>
+          <h2 class="dash-title">Your projects</h2>
+          <p class="dash-subtitle" id="projectCount">Loading…</p>
+        </div>
+        <div class="dash-header-actions">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input class="input search-input" id="searchInput" type="text" placeholder="Search projects…" />
+          </div>
+          <div class="view-toggle">
+            <button class="icon-btn active" id="gridView" title="Grid view">⊞</button>
+            <button class="icon-btn" id="listView" title="List view">≡</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state hidden" id="emptyState">
+        <div class="empty-icon">✏️</div>
+        <h3>No projects yet</h3>
+        <p>Create your first project and start designing.</p>
+        <button class="btn btn-primary btn-lg" id="emptyNewBtn">+ Create project</button>
+      </div>
+
+      <!-- Project grid -->
+      <div class="projects-grid" id="projectsGrid"></div>
+
+    </main>
+  </div>
+
+  <!-- ── New project modal ───────────────────────────── -->
+  <div class="modal-overlay hidden" id="newProjectModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create new project</h3>
+        <button class="icon-btn modal-close" id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="projectName">Project name</label>
+          <input class="input" type="text" id="projectName" placeholder="e.g. My Landing Page" />
+        </div>
+        <div class="template-picker">
+          <span class="form-label">Start from</span>
+          <div class="tmpl-grid">
+            <div class="tmpl-option active" data-tmpl="">
+              <div class="tmpl-icon">◻</div>
+              <span>Blank</span>
+            </div>
+            <div class="tmpl-option" data-tmpl="saas">
+              <div class="tmpl-icon" style="color:var(--accent)">🚀</div>
+              <span>SaaS</span>
+            </div>
+            <div class="tmpl-option" data-tmpl="portfolio">
+              <div class="tmpl-icon" style="color:var(--teal)">🖼</div>
+              <span>Portfolio</span>
+            </div>
+            <div class="tmpl-option" data-tmpl="blog">
+              <div class="tmpl-icon" style="color:var(--brand-burgundy)">📝</div>
+              <span>Blog</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
+        <button class="btn btn-primary" id="createProjectBtn">Create project →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Context menu ────────────────────────────────── -->
+  <div class="ctx-menu hidden" id="ctxMenu">
+    <button class="ctx-item" id="ctxOpen">Open</button>
+    <button class="ctx-item" id="ctxRename">Rename</button>
+    <button class="ctx-item" id="ctxDuplicate">Duplicate</button>
+    <button class="ctx-item" id="ctxStar">Star</button>
+    <div class="ctx-sep"></div>
+    <button class="ctx-item ctx-danger" id="ctxDelete">Delete</button>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script>
+    /* Dashboard is always dark — enforce it */
+    document.documentElement.setAttribute("data-theme","dark");
+  </script>
+<script src="js/dashboard.js"></script>
+<script>
+(function(){
+  const p=document.getElementById('cursorGlowPrimary'),s=document.getElementById('cursorGlowSecondary');
+  if(!p||!s)return;
+  let tx=window.innerWidth/2,ty=window.innerHeight/2,px=tx,py=ty,sx=tx,sy=ty;
+  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;},{passive:true});
+  function loop(){
+    px+=(tx-px)*0.08;py+=(ty-py)*0.08;
+    sx+=(tx-sx)*0.15;sy+=(ty-sy)*0.15;
+    p.style.left=px+'px';p.style.top=py+'px';
+    s.style.left=sx+'px';s.style.top=sy+'px';
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>

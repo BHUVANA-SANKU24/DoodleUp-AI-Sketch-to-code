@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoodleUp! — Design Editor</title>
+  <link rel="stylesheet" href="css/style.css?v=13" />
+  <link rel="stylesheet" href="css/builder.css?v=13" />
+</head>
+<body class="editor-body">
+
+  <!-- ══ TOP BAR ══════════════════════════════════════════ -->
+  <header class="topbar" id="topbar">
+    <div class="tb-left">
+      <a href="dashboard.html" class="tb-logo-btn" title="Back to projects">
+        <span class="tb-logo-mark">D<span style="color:var(--accent)">!</span></span>
+      </a>
+      <div class="tb-vdivider"></div>
+      <input class="design-name-input" id="designName" value="Untitled Design" autocomplete="off" spellcheck="false" />
+      <div class="tb-vdivider"></div>
+      <div class="auto-save-dot" id="autoSaveDot" title="Auto-saved"></div>
+      <span class="auto-save-label" id="autoSaveLabel">Saved</span>
+    </div>
+
+    <div class="tb-center">
+      <button class="tb-btn tb-icon-btn" id="undoBtn" title="Undo (Ctrl+Z)">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 6H9a4 4 0 0 1 0 8H5v-1.5h4a2.5 2.5 0 0 0 0-5H3.5V10L1 7.5 3.5 5V6z"/></svg>
+      </button>
+      <button class="tb-btn tb-icon-btn" id="redoBtn" title="Redo (Ctrl+Y)">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M12.5 6H7a4 4 0 0 0 0 8h4v-1.5H7a2.5 2.5 0 0 1 0-5h5.5V10L15 7.5 12.5 5V6z"/></svg>
+      </button>
+      <div class="tb-vdivider"></div>
+      <div class="zoom-controls">
+        <button class="tb-btn tb-btn-sm" id="zoomOutBtn">−</button>
+        <button class="zoom-display" id="zoomDisplay">100%</button>
+        <button class="tb-btn tb-btn-sm" id="zoomInBtn">+</button>
+        <button class="tb-btn tb-btn-sm" id="zoomFitBtn" title="Fit page">⊡</button>
+      </div>
+      <div class="tb-vdivider"></div>
+      <button class="tb-btn tb-icon-btn tb-toggle-btn" id="gridToggleBtn" title="Toggle Grid (G)">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M5 1v13M10 1v13M1 5h13M1 10h13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="tb-btn tb-icon-btn tb-toggle-btn active" id="snapToggleBtn" title="Toggle Snap">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1v3M7.5 11v3M1 7.5h3M11 7.5h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.3"/></svg>
+      </button>
+      <div class="tb-vdivider"></div>
+      <div class="device-btns">
+        <button class="tb-btn tb-device-btn active" data-device="desktop" title="Desktop">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="2" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 13h5M7.5 11v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </button>
+        <button class="tb-btn tb-device-btn" data-device="tablet" title="Tablet">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="2.5" y="1" width="10" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="7.5" cy="12" r=".8" fill="currentColor"/></svg>
+        </button>
+        <button class="tb-btn tb-device-btn" data-device="mobile" title="Mobile">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="4" y="1" width="7" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="7.5" cy="12" r=".8" fill="currentColor"/><path d="M6 2.5h3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tb-right">
+      <button class="tb-btn tb-btn-text" id="resizeDesignBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="8" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 3h5v5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+        Resize
+      </button>
+      <div class="tb-vdivider"></div>
+      <button class="btn btn-ghost btn-sm" id="aiSettingsBtn" title="AI Settings">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 1v1.5M6.5 10v1.5M1 6.5h1.5M10 6.5h1.5M2.6 2.6l1.1 1.1M9.3 9.3l1.1 1.1M9.3 2.6l-1.1 1.1M2.6 9.3l1.1 1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        AI Settings
+      </button>
+      <button class="btn btn-enhance btn-sm" id="enhanceBtn">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M6.5 1l1.4 3.9L12 6.5l-4.1 1.6L6.5 12l-1.4-3.9L1 6.5l4.1-1.6z"/></svg>
+        Enhance
+      </button>
+      <div class="tb-vdivider"></div>
+      <button class="btn btn-ghost btn-sm" id="previewBtn">Preview</button>
+      <button class="btn btn-ghost btn-sm" id="codeBtn">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M4 3L1 6.5 4 10M9 3l3 3.5-3 3.5M6.5 1.5l-1 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Code
+      </button>
+      <button class="btn btn-primary btn-sm" id="downloadBtn">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M6.5 1v7M3.5 5.5 6.5 8.5l3-3M1.5 10v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ EDITOR BODY ═════════════════════════════════════ -->
+  <div class="editor-layout">
+
+    <!-- ── LEFT SIDEBAR ─────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Icon rail -->
+      <div class="sidebar-rail">
+        <button class="rail-btn active" data-panel="templates" title="Templates">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><rect x="2" y="2" width="7" height="10" rx="1.5"/><rect x="11" y="2" width="7" height="6" rx="1.5"/><rect x="11" y="10" width="7" height="8" rx="1.5"/><rect x="2" y="14" width="7" height="4" rx="1.5"/></svg>
+          <span class="rail-label">Templates</span>
+        </button>
+        <button class="rail-btn" data-panel="elements" title="Elements">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><circle cx="6" cy="6" r="4"/><rect x="10" y="2" width="8" height="8" rx="1"/><polygon points="3,12 10,12 6.5,18"/><rect x="11" y="12" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="rail-label">Elements</span>
+        </button>
+        <button class="rail-btn" data-panel="text" title="Text">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4h14M10 4v12M7 16h6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          <span class="rail-label">Text</span>
+        </button>
+        <button class="rail-btn" data-panel="uploads" title="Uploads">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3v9M7 6l3-3 3 3M4 13v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="rail-label">Uploads</span>
+        </button>
+        <button class="rail-btn" data-panel="brand" title="Brand Kit">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.4 4.9L18 7.6l-4 3.9.9 5.5L10 14.5l-4.9 2.5.9-5.5L2 7.6l5.6-.7L10 2z"/></svg>
+          <span class="rail-label">Brand</span>
+        </button>
+        <div class="rail-divider"></div>
+        <button class="rail-btn" data-panel="draw" title="Draw Mode">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M3 14.5l1-4L13.5 1a1.5 1.5 0 0 1 2.1 0l.9.9a1.5 1.5 0 0 1 0 2.1L7 13.5l-4 1zm1.5-3.5 2.5 2.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 14.5l1-4L13.5 1a1.5 1.5 0 0 1 2.1 0l.9.9a1.5 1.5 0 0 1 0 2.1L7 13.5l-4 1z" fill="currentColor" opacity=".15"/></svg>
+          <span class="rail-label">Draw</span>
+        </button>
+        <button class="rail-btn" data-panel="layers" title="Layers">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6l8-4 8 4-8 4-8-4zM2 10l8 4 8-4M2 14l8 4 8-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="rail-label">Layers</span>
+        </button>
+        <button class="rail-btn" data-panel="components" title="Components">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><rect x="2" y="2" width="7" height="5" rx="1.5" opacity=".6"/><rect x="11" y="2" width="7" height="5" rx="1.5" opacity=".6"/><rect x="2" y="9" width="16" height="4" rx="1.5"/><rect x="2" y="15" width="7" height="3" rx="1.5" opacity=".6"/><rect x="11" y="15" width="7" height="3" rx="1.5" opacity=".6"/></svg>
+          <span class="rail-label">Sections</span>
+        </button>
+        <div class="rail-divider"></div>
+        <button class="rail-btn ai-btn" data-panel="ai-panel" title="AI Assistant">
+          <svg class="rail-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l1.8 3.6L16 7l-3.2 3.1.75 4.4L10 12.4l-3.55 2.1.75-4.4L4 7l4.2-.4z" opacity=".6"/><circle cx="10" cy="10" r="2.5"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+          <span class="rail-label">AI</span>
+        </button>
+      </div>
+
+      <!-- Panel content -->
+      <div class="sidebar-content" id="sidebarContent">
+
+        <!-- TEMPLATES PANEL -->
+        <div class="sb-panel active" id="panel-templates">
+          <div class="panel-header">
+            <span class="panel-title">Templates</span>
+          </div>
+          <div class="panel-search-wrap">
+            <svg class="panel-search-icon" viewBox="0 0 16 16" fill="currentColor"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input class="panel-search-input" id="templateSearch" placeholder="Search templates…" />
+          </div>
+          <div class="cat-scroll">
+            <div class="cat-chips" id="templateCats">
+              <button class="cat-chip active" data-cat="all">All</button>
+              <button class="cat-chip" data-cat="webpage">Website</button>
+              <button class="cat-chip" data-cat="portfolio">Portfolio</button>
+              <button class="cat-chip" data-cat="social">Social</button>
+              <button class="cat-chip" data-cat="presentation">Slides</button>
+              <button class="cat-chip" data-cat="print">Print</button>
+              <button class="cat-chip" data-cat="marketing">Marketing</button>
+              <button class="cat-chip" data-cat="video">Video</button>
+              <button class="cat-chip" data-cat="calligraphy">Calligraphy</button>
+            </div>
+          </div>
+          <div class="panel-section-label">Style</div>
+          <div class="style-chips-row" id="styleChips">
+            <button class="style-chip active" data-style="all">All</button>
+            <button class="style-chip" data-style="Dark">Dark</button>
+            <button class="style-chip" data-style="Minimal">Minimal</button>
+            <button class="style-chip" data-style="Gradient">Gradient</button>
+            <button class="style-chip" data-style="Luxury">Luxury</button>
+            <button class="style-chip" data-style="Modern">Modern</button>
+            <button class="style-chip" data-style="Editorial">Editorial</button>
+            <button class="style-chip" data-style="Vivid">Vivid</button>
+            <button class="style-chip" data-style="Creative">Creative</button>
+            <button class="style-chip" data-style="Elegant">Elegant</button>
+            <button class="style-chip" data-style="Calligraphy">Calligraphy</button>
+            <button class="style-chip" data-style="Corporate">Corporate</button>
+            <button class="style-chip" data-style="Tech">Tech</button>
+            <button class="style-chip" data-style="Startup">Startup</button>
+          </div>
+          <div class="tmpl-results-count" id="tmplResultsCount"></div>
+          <div class="templates-masonry" id="templatesGrid">
+            <!-- injected by JS -->
+          </div>
+        </div>
+
+        <!-- ELEMENTS PANEL -->
+        <div class="sb-panel" id="panel-elements">
+          <div class="panel-header">
+            <span class="panel-title">Elements</span>
+          </div>
+          <div class="panel-search-wrap">
+            <svg class="panel-search-icon" viewBox="0 0 16 16" fill="currentColor"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input class="panel-search-input" id="elementSearch" placeholder="Search elements…" />
+          </div>
+          <div class="el-sections" id="elSections">
+            <div class="el-sec-header">Lines &amp; Arrows</div>
+            <div class="el-grid el-grid-lines" id="elLines"></div>
+            <div class="el-sec-header">Basic Shapes</div>
+            <div class="el-grid" id="elShapes"></div>
+            <div class="el-sec-header">Icons</div>
+            <div class="el-grid" id="elIcons"></div>
+            <div class="el-sec-header">Decorative</div>
+            <div class="el-grid" id="elDecorative"></div>
+          </div>
+        </div>
+
+        <!-- TEXT PANEL -->
+        <div class="sb-panel" id="panel-text">
+          <div class="panel-header">
+            <span class="panel-title">Text</span>
+          </div>
+          <div class="text-adders">
+            <button class="text-adder-btn" data-style="heading">
+              <span class="ta-label" style="font-size:22px;font-weight:800">Add a heading</span>
+            </button>
+            <button class="text-adder-btn" data-style="subheading">
+              <span class="ta-label" style="font-size:16px;font-weight:600">Add a subheading</span>
+            </button>
+            <button class="text-adder-btn" data-style="body">
+              <span class="ta-label" style="font-size:13px">Add a little bit of body text</span>
+            </button>
+          </div>
+          <div class="el-sec-header" style="margin-top:16px">Font combinations</div>
+          <div class="font-combos" id="fontCombos"></div>
+        </div>
+
+        <!-- UPLOADS PANEL -->
+        <div class="sb-panel" id="panel-uploads">
+          <div class="panel-header">
+            <span class="panel-title">Uploads</span>
+          </div>
+          <label class="upload-drop-zone" id="uploadZone">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4v14M9 9l5-5 5 5M4 20v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="udz-title">Upload files</span>
+            <span class="udz-sub">JPG, PNG, SVG, WEBP</span>
+            <input type="file" id="fileUpload" accept="image/*" multiple hidden />
+          </label>
+          <div class="uploads-grid" id="uploadsGrid"></div>
+        </div>
+
+        <!-- BRAND KIT PANEL -->
+        <div class="sb-panel" id="panel-brand">
+          <div class="panel-header">
+            <span class="panel-title">Brand Kit</span>
+          </div>
+          <div class="brand-section">
+            <div class="brand-sec-title">Brand colors</div>
+            <div class="brand-colors" id="brandColors">
+              <button class="brand-color-swatch" style="background:#f3701e" title="#f3701e" data-color="#f3701e"></button>
+              <button class="brand-color-swatch" style="background:#0d3d3a" title="#0d3d3a" data-color="#0d3d3a"></button>
+              <button class="brand-color-swatch" style="background:#6C171E" title="#6C171E" data-color="#6C171E"></button>
+              <button class="brand-color-swatch" style="background:#4A69B3" title="#4A69B3" data-color="#4A69B3"></button>
+              <button class="brand-color-swatch" style="background:#FFEC89" title="#FFEC89" data-color="#FFEC89"></button>
+              <button class="brand-color-swatch" style="background:#f5b8c4" title="#f5b8c4" data-color="#f5b8c4"></button>
+              <button class="brand-color-swatch" style="background:#BA3801" title="#BA3801" data-color="#BA3801"></button>
+              <button class="brand-color-swatch" style="background:#4b607f" title="#4b607f" data-color="#4b607f"></button>
+              <button class="brand-color-add">+</button>
+            </div>
+          </div>
+          <div class="brand-section">
+            <div class="brand-sec-title">Brand fonts</div>
+            <button class="brand-font-row" data-font="DM Serif Display">
+              <span style="font-family:'DM Serif Display',serif;font-style:italic;font-size:18px">DM Serif Display</span>
+            </button>
+            <button class="brand-font-row" data-font="Space Grotesk">
+              <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px">Space Grotesk</span>
+            </button>
+            <button class="brand-font-row" data-font="Inter">
+              <span style="font-family:'Inter',sans-serif;font-size:14px">Inter</span>
+            </button>
+          </div>
+          <div class="brand-section">
+            <div class="brand-sec-title">Saved styles</div>
+            <div id="savedStylesList" class="saved-styles-list">
+              <div class="saved-styles-empty">Save element styles to reuse them across your designs.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRAW PANEL -->
+        <div class="sb-panel" id="panel-draw">
+          <div class="panel-header">
+            <span class="panel-title">Draw</span>
+            <button class="panel-head-btn draw-mode-indicator hidden" id="drawModeIndicator">● LIVE</button>
+          </div>
+          <div class="draw-tools-grid">
+            <button class="draw-tool-btn active" data-tool="pencil" title="Pencil">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 15l1-3.5L13 4a1.5 1.5 0 0 1 2.1 0l.9.9a1.5 1.5 0 0 1 0 2.1L8 14.5 4 15.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Pencil</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="pen" title="Pen">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 16l1.5-4L15 4l2 2-8.5 7.5L5 16z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="4" r="1.5" fill="currentColor"/></svg>
+              <span>Pen</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="brush" title="Brush">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 16c2 0 4-2 4-4M8 12L15 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M15 5l1-1.5c.5-.5 1.5-.3 1.5.7C17.5 5.7 16 6 15 6" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+              <span>Brush</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="marker" title="Marker">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="8" y="2" width="5" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M9 12l-1.5 6h5L11 12M9 12h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              <span>Marker</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="spray" title="Airbrush">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="6" cy="10" r="1"/><circle cx="10" cy="7" r=".8"/><circle cx="12" cy="12" r=".8"/><circle cx="8" cy="14" r=".7"/><circle cx="14" cy="9" r=".7"/><path d="M2 10h4M6 10c0-2 2-4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              <span>Airbrush</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="eraser" title="Eraser">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 14l6-6 5 5-3 3H4v-2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M4 16h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              <span>Eraser</span>
+            </button>
+          </div>
+
+          <div class="draw-color-row">
+            <span class="draw-setting-label">Color</span>
+            <input type="color" id="drawColor" value="#1a0f08" class="draw-color-input" />
+            <div class="draw-quick-colors">
+              <button class="dqc" style="background:#1a0f08" data-c="#1a0f08"></button>
+              <button class="dqc" style="background:#ffffff;border:1px solid rgba(255,255,255,.2)" data-c="#ffffff"></button>
+              <button class="dqc" style="background:#f3701e" data-c="#f3701e"></button>
+              <button class="dqc" style="background:#0d3d3a" data-c="#0d3d3a"></button>
+              <button class="dqc" style="background:#6C171E" data-c="#6C171E"></button>
+              <button class="dqc" style="background:#4A69B3" data-c="#4A69B3"></button>
+              <button class="dqc" style="background:#FFEC89;border:1px solid rgba(255,255,255,.1)" data-c="#FFEC89"></button>
+            </div>
+          </div>
+
+          <div class="draw-settings">
+            <div class="draw-setting-row">
+              <span class="draw-setting-label">Size</span>
+              <input type="range" class="draw-range" id="drawSize" min="1" max="80" value="12" />
+              <span class="draw-setting-val" id="drawSizeVal">12</span>
+            </div>
+            <div class="draw-setting-row">
+              <span class="draw-setting-label">Opacity</span>
+              <input type="range" class="draw-range" id="drawOpacity" min="5" max="100" value="100" />
+              <span class="draw-setting-val" id="drawOpacityVal">100%</span>
+            </div>
+            <div class="draw-setting-row">
+              <span class="draw-setting-label">Smooth</span>
+              <input type="range" class="draw-range" id="drawSmoothing" min="0" max="10" value="3" />
+              <span class="draw-setting-val" id="drawSmoothVal">3</span>
+            </div>
+          </div>
+
+          <canvas class="draw-preview-canvas" id="brushPreview" width="200" height="48"></canvas>
+
+          <div class="draw-actions">
+            <button class="draw-enter-btn" id="drawEnterBtn">Enter Draw Mode</button>
+            <button class="draw-clear-btn" id="drawClearBtn">Clear drawing</button>
+          </div>
+        </div>
+
+        <!-- LAYERS PANEL -->
+        <div class="sb-panel" id="panel-layers">
+          <div class="panel-header">
+            <span class="panel-title">Layers</span>
+            <button class="panel-head-btn" id="layersRefreshBtn" title="Refresh layers">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 2.5A5.5 5.5 0 1 0 12 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M9 2.5h2v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="layers-empty" id="layersEmpty">Add elements to see layers here.</div>
+          <div class="layers-list" id="layersList"></div>
+        </div>
+
+        <!-- COMPONENTS PANEL -->
+        <div class="sb-panel" id="panel-components">
+          <div class="panel-header"><span class="panel-title">Sections</span></div>
+          <div class="panel-search-wrap">
+            <svg class="panel-search-icon" viewBox="0 0 16 16" fill="currentColor"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input class="panel-search-input" id="componentSearch" placeholder="Search sections…" />
+          </div>
+          <div class="components-list" id="componentsList">
+            <div class="comp-category">Hero Sections</div>
+            <div class="comp-grid">
+              <button class="comp-card" data-comp="hero-dark"><div class="comp-thumb comp-thumb-hero-dark"></div><span>Dark Hero</span></button>
+              <button class="comp-card" data-comp="hero-light"><div class="comp-thumb comp-thumb-hero-light"></div><span>Light Hero</span></button>
+              <button class="comp-card" data-comp="hero-split"><div class="comp-thumb comp-thumb-hero-split"></div><span>Split Hero</span></button>
+              <button class="comp-card" data-comp="hero-center"><div class="comp-thumb comp-thumb-hero-center"></div><span>Centered</span></button>
+            </div>
+            <div class="comp-category">CTA Sections</div>
+            <div class="comp-grid">
+              <button class="comp-card" data-comp="cta-banner"><div class="comp-thumb comp-thumb-cta-banner"></div><span>Banner CTA</span></button>
+              <button class="comp-card" data-comp="cta-card"><div class="comp-thumb comp-thumb-cta-card"></div><span>Card CTA</span></button>
+            </div>
+            <div class="comp-category">Feature Grids</div>
+            <div class="comp-grid">
+              <button class="comp-card" data-comp="features-3col"><div class="comp-thumb comp-thumb-feat"></div><span>3 Columns</span></button>
+              <button class="comp-card" data-comp="features-2col"><div class="comp-thumb comp-thumb-feat"></div><span>2 Columns</span></button>
+            </div>
+            <div class="comp-category">Testimonials</div>
+            <div class="comp-grid">
+              <button class="comp-card" data-comp="testimonial-card"><div class="comp-thumb comp-thumb-test"></div><span>Quote Card</span></button>
+              <button class="comp-card" data-comp="testimonial-row"><div class="comp-thumb comp-thumb-test"></div><span>Quote Row</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI ASSISTANT PANEL -->
+        <div class="sb-panel" id="panel-ai-panel">
+          <div class="panel-header">
+            <span class="panel-title">AI Assistant</span>
+          </div>
+          <div style="padding:12px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:11px;color:#6b7280;line-height:1.55;margin-bottom:4px;">Generate or improve designs using AI</div>
+            <button class="ai-quick-btn" onclick="document.getElementById('enhanceBtn')?.click()">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M6.5 1l1.4 3.9L12 6.5l-4.1 1.6L6.5 12l-1.4-3.9L1 6.5l4.1-1.6z"/></svg>
+              Enhance Design
+            </button>
+            <button class="ai-quick-btn" onclick="if(window.DoodleAI)DoodleAI.ask('Analyze this design and suggest specific improvements to the visual hierarchy, typography, and spacing.',null,window._canvas||document.querySelector('#mainCanvas')?.__fabric)">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 6V3M6.5 9v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Analyze Layout
+            </button>
+            <button class="ai-quick-btn" onclick="if(window.DoodleAI)DoodleAI.ask('Suggest a better color palette for this design. Provide hex codes.',null,window._canvas||null)">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="4" cy="4" r="2" fill="#f97316"/><circle cx="9" cy="4" r="2" fill="#7c3aed"/><circle cx="4" cy="9" r="2" fill="#06b6d4"/><circle cx="9" cy="9" r="2" fill="#10b981"/></svg>
+              Improve Colors
+            </button>
+            <button class="ai-quick-btn" onclick="if(window.DoodleAI)DoodleAI.ask('Improve the typography choices in this design. Suggest font pairings and size hierarchy.',null,null)">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M1.5 2.5h10M6.5 2.5v8M4 10.5h5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+              Improve Typography
+            </button>
+            <div style="border-top:1px solid rgba(255,255,255,0.08);margin:4px 0;padding-top:8px;">
+              <div style="font-size:10.5px;color:#6b7280;margin-bottom:6px;font-weight:600;">GENERATE</div>
+              <button class="ai-quick-btn" onclick="if(window.DoodleAI)DoodleAI.ask('Generate a hero section design layout with headline, subtext, and CTA button positioned professionally.',null,null)">Generate Hero Section</button>
+              <button class="ai-quick-btn" style="margin-top:5px" onclick="if(window.DoodleAI)DoodleAI.ask('Generate a testimonial card design with quote, avatar area, and author name.',null,null)">Generate Testimonial</button>
+              <button class="ai-quick-btn" style="margin-top:5px" onclick="if(window.DoodleAI)DoodleAI.ask('Generate a features grid section with 3 feature cards showing icon, title, and description.',null,null)">Generate Features Grid</button>
+            </div>
+            <div style="margin-top:8px;">
+              <button class="ai-quick-btn" style="background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.4);color:#a78bfa" onclick="document.getElementById('aiSettingsBtn')?.click()">
+                ⚙ Configure AI Settings
+              </button>
+            </div>
+
+            <!-- ── AI Design Chat ─────────────────────────────── -->
+            <div style="border-top:1px solid rgba(255,255,255,0.1);margin-top:4px;padding-top:10px;">
+              <div style="font-size:10.5px;color:#6b7280;margin-bottom:8px;font-weight:600;letter-spacing:.04em;">AI DESIGN CHAT</div>
+              <div class="dc-messages" id="dcMessages">
+                <div class="dc-msg dc-msg-ai">Describe how you'd like to improve this design. You can also attach an image or use your voice.</div>
+              </div>
+
+              <!-- Attachment previews -->
+              <div class="dc-attach-strip hidden" id="dcAttachStrip"></div>
+
+              <!-- Voice status bar -->
+              <div class="dc-voice-bar hidden" id="dcVoiceBar">
+                <span class="dc-voice-dot"></span>
+                <span class="dc-voice-label" id="dcVoiceLabel">Listening…</span>
+                <button class="dc-voice-stop" id="dcVoiceStop" title="Stop recording">&#x25A0;</button>
+              </div>
+
+              <div class="dc-compose">
+                <textarea class="dc-input" id="dcInput" placeholder="Describe changes, or attach a photo for reference…" rows="2"></textarea>
+                <div class="dc-compose-actions">
+                  <button class="dc-action-btn" id="dcAttachBtn" title="Attach image or file">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.5 7.5l-5.5 5.5a3.5 3.5 0 0 1-4.95-4.95l6-6a2 2 0 0 1 2.83 2.83L5 10.7a.5.5 0 0 1-.71-.71l5.5-5.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button class="dc-action-btn" id="dcVoiceBtn" title="Voice input">
+                    <svg width="13" height="14" viewBox="0 0 13 14" fill="none"><rect x="4" y="1" width="5" height="7.5" rx="2.5" stroke="currentColor" stroke-width="1.35"/><path d="M1.5 7.5a5 5 0 0 0 10 0" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/><line x1="6.5" y1="12.5" x2="6.5" y2="13.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/><line x1="4" y1="13.5" x2="9" y2="13.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg>
+                  </button>
+                  <button class="dc-send" id="dcSend" title="Send (Enter)">
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M12.5 1.5L1 5.5l5 2.5M12.5 1.5L9 13l-3-5M12.5 1.5L6 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </div>
+              <!-- Hidden file input -->
+              <input type="file" id="dcFileInput" accept="image/*,.pdf,.txt,.md,.csv" multiple style="display:none">
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sidebar-content -->
+    </aside>
+
+    <!-- ── CANVAS WORKSPACE ──────────────────────────────── -->
+    <main class="canvas-workspace stack-mode" id="workspace">
+      <div class="ws-hint" id="wsHint">Space + drag to pan &nbsp;·&nbsp; Ctrl + scroll to zoom</div>
+      <canvas id="mainCanvas"></canvas>
+      <div id="pageStack" class="page-stack"></div>
+    </main>
+
+    <!-- ── RIGHT PANEL ───────────────────────────────────── -->
+    <aside class="right-panel" id="rightPanel">
+      <div class="rp-scroll" id="rpContent">
+        <div class="rp-empty" id="rpEmpty">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" rx="4" stroke="var(--border-default)" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="20" cy="20" r="3" fill="var(--border-default)"/></svg>
+          <p>Select an element<br/>to edit properties</p>
+        </div>
+      </div>
+    </aside>
+
+  </div><!-- /editor-layout -->
+
+  <!-- ══ BOTTOM DOCK ══════════════════════════════════════════ -->
+  <div class="bottom-dock" id="bottomDock">
+    <div class="dock-header">
+      <div class="dock-tabs">
+        <button class="dock-tab active" data-dock="layers">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 4l5-2.5L11 4 6 6.5 1 4zM1 7l5 2.5L11 7M1 10l5 2.5L11 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Layers
+        </button>
+        <button class="dock-tab" data-dock="pages">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="7" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4 4h7M4 7h7M10 4v7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Pages
+        </button>
+        <button class="dock-tab" data-dock="history">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M9.5 2A5 5 0 1 0 10.5 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8 2h1.5v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 4v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          History
+        </button>
+      </div>
+      <button class="dock-collapse-btn" id="dockCollapseBtn" title="Toggle dock">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" id="dockCollapseIcon"><path d="M2 4.5l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="dock-body" id="dockBody">
+      <!-- Layers pane -->
+      <div class="dock-pane active" id="dock-pane-layers">
+        <div class="dock-layers-list" id="dockLayersList">
+          <div class="dock-empty">No elements yet. Add shapes, text, or images to the canvas.</div>
+        </div>
+      </div>
+      <!-- Pages pane -->
+      <div class="dock-pane" id="dock-pane-pages">
+        <div class="pages-strip" id="pagesStrip"><!-- injected by renderPagesNav, includes inline + button --></div>
+      </div>
+      <!-- History pane -->
+      <div class="dock-pane" id="dock-pane-history">
+        <div class="history-list" id="historyList">
+          <div class="dock-empty">Actions will appear here as you edit.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ELEMENT ACTION BAR ════════════════════════════════ -->
+  <div class="elem-action-bar hidden" id="elemActionBar">
+    <button class="eab-btn" id="eabRotateCCW" title="Rotate 90° CCW">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5A4.5 4.5 0 0 1 6.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 6.5A4.5 4.5 0 1 0 6.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 100"/><path d="M2 3.5V6.5H5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="eab-btn" id="eabRotateCW" title="Rotate 90° CW">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 6.5A4.5 4.5 0 0 0 6.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M11 6.5A4.5 4.5 0 1 1 6.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 100"/><path d="M11 3.5V6.5H8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="eab-sep"></div>
+    <button class="eab-btn" id="eabCopy" title="Copy (Ctrl+C)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="3.5" width="8" height="9" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4 3.5V2.5A1 1 0 0 1 5 1.5h6a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="eab-btn" id="eabPaste" title="Paste (Ctrl+V)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="3" width="9" height="9.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7h3M6.5 5.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="eab-btn" id="eabDuplicate" title="Duplicate (Ctrl+D)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="7.5" height="8" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="1" width="7.5" height="8" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <div class="eab-sep"></div>
+    <button class="eab-btn eab-danger" id="eabDelete" title="Delete (Del)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 3.5h9M4.5 3.5V2h4v1.5M5 6v4M8 6v4M2.5 3.5l.6 7.5a1 1 0 0 0 1 .9h3.8a1 1 0 0 0 1-.9l.6-7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- ══ CANVAS CONTEXT MENU ════════════════════════════════ -->
+  <div class="canvas-ctx-menu hidden" id="canvasCtxMenu">
+    <button class="canvas-ctx-item" id="cctxCopy">
+      <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="3.5" width="8" height="9" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4 3.5V2.5A1 1 0 0 1 5 1.5h6a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Copy
+      <span class="ctx-kbd">Ctrl C</span>
+    </button>
+    <button class="canvas-ctx-item" id="cctxPaste">
+      <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><rect x="2" y="3" width="9" height="9.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Paste
+      <span class="ctx-kbd">Ctrl V</span>
+    </button>
+    <button class="canvas-ctx-item" id="cctxDuplicate">
+      <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><rect x="1" y="4" width="7.5" height="8" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="1" width="7.5" height="8" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
+      Duplicate
+      <span class="ctx-kbd">Ctrl D</span>
+    </button>
+    <div class="ctx-sep"></div>
+    <button class="canvas-ctx-item canvas-ctx-danger" id="cctxDelete">
+      <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M2 3.5h9M4.5 3.5V2h4v1.5M5 6v4M8 6v4M2.5 3.5l.6 7.5a1 1 0 0 0 1 .9h3.8a1 1 0 0 0 1-.9l.6-7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Delete
+      <span class="ctx-kbd">Del</span>
+    </button>
+  </div>
+
+  <!-- ══ SLIDESHOW / PRESENTATION MODE ════════════════════ -->
+  <div class="sl-overlay hidden" id="slideshowOverlay">
+
+    <!-- Top toolbar -->
+    <div class="sl-toolbar" id="slToolbar">
+      <div class="sl-tb-left">
+        <div class="sl-logo">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="#FF6B00"/><path d="M5 5h5a5 5 0 0 1 0 10H5V5z" fill="white"/><circle cx="15" cy="15" r="2.5" fill="white"/></svg>
+          <span class="sl-project-name" id="slProjectName">Presentation</span>
+        </div>
+        <div class="sl-counter-wrap">
+          <span class="sl-page-name" id="slPageName">Page 1</span>
+          <span class="sl-counter" id="slCounter">1 / 1</span>
+        </div>
+      </div>
+
+      <div class="sl-tb-center">
+        <label class="sl-label">Transition</label>
+        <select class="sl-select" id="slTransition">
+          <option value="fade">✦ Fade</option>
+          <option value="slide">→ Slide</option>
+          <option value="zoom">⊕ Zoom</option>
+          <option value="rise">↑ Rise</option>
+          <option value="flip">⟳ Flip</option>
+          <option value="none">· None</option>
+        </select>
+        <label class="sl-label">Auto</label>
+        <select class="sl-select" id="slAutoTime">
+          <option value="0">Off</option>
+          <option value="3000" selected>3s</option>
+          <option value="5000">5s</option>
+          <option value="8000">8s</option>
+          <option value="12000">12s</option>
+        </select>
+      </div>
+
+      <div class="sl-tb-right">
+        <button class="sl-tb-btn" id="slPlayPause" title="Play / Pause (Space)">
+          <svg id="slPlayIcon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2l9 5-9 5V2z"/></svg>
+          <svg id="slPauseIcon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="display:none"><rect x="2" y="2" width="4" height="10" rx="1"/><rect x="8" y="2" width="4" height="10" rx="1"/></svg>
+        </button>
+        <button class="sl-tb-btn" id="slFullscreen" title="Fullscreen (F)">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 4.5V1.5h3M9 1.5h3v3M12 8.5v3H9M4 11.5H1v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="sl-tb-btn sl-close-btn" id="slClose" title="Close (Esc)">✕</button>
+      </div>
+    </div>
+
+    <!-- Main stage -->
+    <div class="sl-stage" id="slStage">
+      <!-- Live Fabric.js canvas (element animations play here) -->
+      <div class="sl-canvas-frame" id="slCanvasFrame"></div>
+
+      <!-- Snapshot overlay used only during page-to-page transitions -->
+      <div class="sl-trans-snap hidden" id="slTransSnap">
+        <img id="slTransImg" src="" alt=""/>
+      </div>
+
+      <!-- Loading overlay (first open only) -->
+      <div class="sl-loading hidden" id="slLoading">
+        <div class="sl-spinner"></div>
+        <span>Loading…</span>
+      </div>
+    </div>
+
+    <!-- Bottom nav + progress -->
+    <div class="sl-bottom" id="slBottom">
+      <button class="sl-nav-btn" id="slPrev" title="Previous (←)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 4l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sl-dots" id="slDots"></div>
+      <button class="sl-nav-btn" id="slNext" title="Next (→)">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Auto-play progress bar -->
+    <div class="sl-progress-track"><div class="sl-progress-fill" id="slProgressFill"></div></div>
+  </div>
+
+  <!-- ══ PAGE CONTEXT MENU ══════════════════════════════ -->
+  <div id="pageCtxMenu" class="page-ctx-menu hidden">
+    <button class="page-ctx-item" id="pageCtxRename">✏ Rename</button>
+    <button class="page-ctx-item" id="pageCtxCopy">⎘ Copy Page</button>
+    <button class="page-ctx-item" id="pageCtxDuplicate">⧉ Duplicate</button>
+    <button class="page-ctx-item" id="pageCtxPaste" class="hidden">⎋ Paste Page</button>
+    <button class="page-ctx-item" id="pageCtxSetHome">⌂ Set as Home</button>
+    <div class="page-ctx-sep"></div>
+    <button class="page-ctx-item page-ctx-danger" id="pageCtxDelete">🗑 Delete</button>
+  </div>
+
+  <!-- ══ FLOATING TEXT TOOLBAR ════════════════════════════ -->
+  <div class="floating-toolbar hidden" id="floatingToolbar">
+    <button class="ft-btn ft-font-btn" id="ftFontBtn">
+      <span id="ftFontName">Space Grotesk</span>
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 3.5 5 7l3-3.5"/></svg>
+    </button>
+    <div class="ft-sep"></div>
+    <button class="ft-btn ft-icon" id="ftSizeDown">−</button>
+    <input class="ft-size" id="ftFontSize" type="number" value="24" min="6" max="800" />
+    <button class="ft-btn ft-icon" id="ftSizeUp">+</button>
+    <div class="ft-sep"></div>
+    <button class="ft-btn ft-color-btn" id="ftColorBtn" title="Text color">
+      <span class="ft-color-a">A</span>
+      <span class="ft-color-bar" id="ftColorBar" style="background:#1a0f08"></span>
+    </button>
+    <div class="ft-sep"></div>
+    <button class="ft-btn ft-icon ft-toggle" id="ftBold"      data-prop="fontWeight">𝗕</button>
+    <button class="ft-btn ft-icon ft-toggle" id="ftItalic"    data-prop="fontStyle">𝘐</button>
+    <button class="ft-btn ft-icon ft-toggle" id="ftUnderline" data-prop="underline">U̲</button>
+    <div class="ft-sep"></div>
+    <button class="ft-btn ft-icon ft-align" data-align="left">   <svg width="14" height="12" viewBox="0 0 14 12"><line x1="1" y1="2" x2="13" y2="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="9"  y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="10" x2="11" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <button class="ft-btn ft-icon ft-align" data-align="center"><svg width="14" height="12" viewBox="0 0 14 12"><line x1="1" y1="2" x2="13" y2="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <button class="ft-btn ft-icon ft-align" data-align="right"> <svg width="14" height="12" viewBox="0 0 14 12"><line x1="1" y1="2" x2="13" y2="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="5" y1="6" x2="13" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="10" x2="13" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="ft-sep"></div>
+    <button class="ft-btn ft-icon" id="ftDeleteObj" title="Delete">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M5 3.5V2h4v1.5M5.5 6v4.5M8.5 6v4.5M3 3.5l.7 8a1 1 0 0 0 1 .9h4.6a1 1 0 0 0 1-.9l.7-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- ══ FONT PICKER ══════════════════════════════════════ -->
+  <div class="font-picker hidden" id="fontPicker">
+    <input class="fp-search" id="fpSearch" placeholder="Search fonts…" />
+    <div class="fp-list" id="fpList"></div>
+  </div>
+
+  <!-- ══ COLOR PICKER POPUP ═══════════════════════════════ -->
+  <div class="color-popup hidden" id="colorPopup">
+    <!-- Tabs -->
+    <div class="cp-tabs">
+      <button class="cp-tab active" id="cpTabSolid">Solid</button>
+      <button class="cp-tab" id="cpTabGrad">Gradient</button>
+      <button class="cp-eyedropper-btn" id="cpEyedropper" title="Eyedropper">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 2l2 2-6 6-2.5.5.5-2.5L10 2z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3" cy="11" r="1" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <!-- Solid pane -->
+    <div id="cpSolidPane">
+      <input type="color" class="cp-native" id="cpNative" />
+      <div class="cp-presets">
+        <button class="cp-swatch" style="background:#000000" data-color="#000000"></button>
+        <button class="cp-swatch" style="background:#ffffff;border:1px solid #ddd" data-color="#ffffff"></button>
+        <button class="cp-swatch" style="background:#f3701e" data-color="#f3701e"></button>
+        <button class="cp-swatch" style="background:#0d3d3a" data-color="#0d3d3a"></button>
+        <button class="cp-swatch" style="background:#6C171E" data-color="#6C171E"></button>
+        <button class="cp-swatch" style="background:#4A69B3" data-color="#4A69B3"></button>
+        <button class="cp-swatch" style="background:#FFEC89" data-color="#FFEC89"></button>
+        <button class="cp-swatch" style="background:#f5b8c4" data-color="#f5b8c4"></button>
+        <button class="cp-swatch" style="background:#BA3801" data-color="#BA3801"></button>
+        <button class="cp-swatch" style="background:#4b607f" data-color="#4b607f"></button>
+      </div>
+      <div class="cp-hex-row">
+        <span>#</span>
+        <input class="cp-hex" id="cpHex" maxlength="6" placeholder="f3701e" />
+      </div>
+    </div>
+
+    <!-- Gradient pane -->
+    <div id="cpGradPane" class="hidden">
+      <div class="cp-grad-type-row">
+        <button class="cp-grad-type-btn active" id="cpGradTypeLinear">Linear</button>
+        <button class="cp-grad-type-btn" id="cpGradTypeRadial">Radial</button>
+      </div>
+      <div class="cp-grad-stops">
+        <div class="cp-grad-stop-row">
+          <span class="cp-grad-stop-lbl">Color 1</span>
+          <input type="color" class="cp-grad-color" id="cpGrad1" value="#f3701e" />
+        </div>
+        <div class="cp-grad-stop-row">
+          <span class="cp-grad-stop-lbl">Color 2</span>
+          <input type="color" class="cp-grad-color" id="cpGrad2" value="#BA3801" />
+        </div>
+      </div>
+      <div class="cp-grad-angle-row">
+        <span class="cp-grad-stop-lbl">Angle</span>
+        <input type="range" id="cpGradAngle" min="0" max="360" value="135" class="cp-grad-angle-slider" />
+        <span id="cpGradAngleVal" class="cp-grad-angle-val">135°</span>
+      </div>
+      <div id="cpGradPreviewBar" style="height:20px;border-radius:6px;margin:8px 0;background:linear-gradient(135deg,#f3701e,#BA3801)"></div>
+      <button class="cp-grad-apply-btn" id="cpGradApply">Apply gradient</button>
+    </div>
+  </div>
+
+  <!-- ══ AI FLOATING BUTTON ════════════════════════════════ -->
+  <button class="ai-fab" id="aiFab">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M9 1l1.8 5.2H17l-4.9 3.6 1.9 5.2L9 12.4l-5 2.6 1.9-5.2L1 6.2h6.2z"/></svg>
+    <span>AI</span>
+  </button>
+
+  <!-- ══ AI DRAWER ═════════════════════════════════════════ -->
+  <div class="ai-drawer hidden" id="aiDrawer">
+    <div class="ai-drawer-head">
+      <span>✦ AI Design Copilot</span>
+      <button class="ai-drawer-close" id="aiClose">✕</button>
+    </div>
+
+    <!-- AI Tabs -->
+    <div class="ai-tabs">
+      <button class="ai-tab-btn active" data-tab="chat">Chat</button>
+      <button class="ai-tab-btn" data-tab="analyze">Analyze</button>
+      <button class="ai-tab-btn" data-tab="styles">Styles</button>
+      <button class="ai-tab-btn" data-tab="colors">Colors</button>
+    </div>
+
+    <!-- Chat pane -->
+    <div class="ai-tab-pane" id="ai-pane-chat">
+      <div class="ai-messages" id="aiMessages">
+        <div class="ai-msg-bubble ai-msg-sys">Hi! I'm your AI Design Copilot. I can analyze your design, suggest improvements, and help with colors, typography and animations.</div>
+      </div>
+      <div class="ai-compose">
+        <input class="ai-compose-input" id="aiInput" placeholder="Ask anything about your design…" />
+        <button class="ai-compose-send" id="aiSend">→</button>
+      </div>
+    </div>
+
+    <!-- Analyze pane -->
+    <div class="ai-tab-pane hidden" id="ai-pane-analyze">
+      <div class="ai-analyze-actions">
+        <button class="ai-action-btn" id="aiAnalyzeBtn">
+          <span>🔍</span> Analyze design
+        </button>
+        <button class="ai-action-btn ai-action-btn-secondary" id="aiImproveBtn">
+          <span>✦</span> Improve selected
+        </button>
+      </div>
+      <div id="analysisResults" class="analysis-results">
+        <div class="analysis-empty">Click "Analyze design" to get AI suggestions for your current canvas.</div>
+      </div>
+    </div>
+
+    <!-- Style presets pane -->
+    <div class="ai-tab-pane hidden" id="ai-pane-styles">
+      <p class="ai-pane-desc">Apply a visual style across your entire design. Structure and content are preserved.</p>
+      <div id="stylePresetsGrid" class="style-presets-grid">
+        <!-- Injected by JS from DoodleAI.STYLE_PRESETS -->
+      </div>
+    </div>
+
+    <!-- Colors pane -->
+    <div class="ai-tab-pane hidden" id="ai-pane-colors">
+      <p class="ai-pane-desc">Generate an AI color palette from a mood keyword.</p>
+      <div class="ai-palette-row">
+        <input class="ai-palette-input" id="aiPaletteMood" placeholder="professional, warm, playful…" value="professional" />
+        <button class="ai-action-btn" id="aiPaletteBtn">Generate</button>
+      </div>
+      <div id="aiPaletteResult" class="ai-palette-result">
+        <div class="analysis-empty">Enter a mood and click Generate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ AI DESIGN PREVIEW MODAL ══════════════════════════ -->
+  <div class="modal-overlay hidden" id="dcPreviewModal">
+    <div class="dc-preview-card">
+      <div class="dc-preview-head">
+        <div class="dc-preview-title">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.6 4.4L14 7l-4.4 1.6L8 13l-1.6-4.4L2 7l4.4-1.6z"/></svg>
+          AI Enhanced Design
+        </div>
+        <button class="modal-close-btn" id="dcPreviewClose">✕</button>
+      </div>
+      <div class="dc-preview-body">
+        <div class="dc-preview-col">
+          <div class="dc-col-label">Original</div>
+          <div class="dc-canvas-wrap">
+            <img id="dcOriginalImg" alt="Original design" />
+          </div>
+        </div>
+        <div class="dc-preview-divider">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="dc-preview-col">
+          <div class="dc-col-label">Enhanced</div>
+          <div class="dc-canvas-wrap dc-enhanced-wrap">
+            <img id="dcEnhancedImg" alt="Enhanced design" />
+            <div class="dc-loading" id="dcLoading">
+              <div class="dc-spinner"></div>
+              <span>GPT-4o is enhancing…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dc-preview-prompt" id="dcPromptDisplay"></div>
+      <div class="dc-preview-footer">
+        <button class="btn btn-secondary" id="dcDiscard">Keep Original</button>
+        <button class="btn btn-primary" id="dcApply" disabled>Use Enhanced Design</button>
+        <button class="btn btn-ghost dc-code-btn" id="dcGenCode" disabled>
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M4 3L1 6.5 4 10M9 3l3 3.5-3 3.5M7 2l-1 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Generate Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ AI CODE OUTPUT MODAL ══════════════════════════════ -->
+  <div class="modal-overlay hidden" id="dcCodeModal">
+    <div class="dc-code-card">
+      <div class="dc-preview-head">
+        <div class="dc-preview-title">Generated Code</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn btn-ghost btn-sm" id="dcCopyCode">Copy</button>
+          <button class="modal-close-btn" id="dcCodeClose">✕</button>
+        </div>
+      </div>
+      <div class="dc-code-tabs">
+        <button class="dc-code-tab active" data-lang="html">HTML</button>
+        <button class="dc-code-tab" data-lang="css">CSS</button>
+        <button class="dc-code-tab" data-lang="react">React</button>
+      </div>
+      <pre class="dc-code-block" id="dcCodeBlock"><code></code></pre>
+    </div>
+  </div>
+
+  <!-- ══ DOWNLOAD MODAL ════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="downloadModal">
+    <div class="du-modal">
+      <div class="du-modal-head">
+        <span>Download</span>
+        <button class="modal-close-btn" id="downloadClose">✕</button>
+      </div>
+      <div class="du-modal-body">
+        <div class="dl-format-row">
+          <button class="dl-fmt active" data-fmt="png">PNG</button>
+          <button class="dl-fmt" data-fmt="jpeg">JPG</button>
+          <button class="dl-fmt" data-fmt="svg">SVG</button>
+        </div>
+        <label class="dl-quality-row">
+          <span>Quality</span>
+          <input type="range" id="dlQuality" min="0.5" max="3" step="0.5" value="2" />
+          <span id="dlQualityVal">2×</span>
+        </label>
+      </div>
+      <div class="du-modal-foot">
+        <button class="btn btn-secondary" id="downloadCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="downloadConfirmBtn">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RESIZE MODAL ══════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="resizeModal">
+    <div class="du-modal du-modal-wide">
+      <div class="du-modal-head">
+        <span>Resize design</span>
+        <button class="modal-close-btn" id="resizeClose">✕</button>
+      </div>
+      <div class="du-modal-body">
+        <div class="resize-presets">
+          <!-- Social -->
+          <button class="resize-preset" data-w="1080" data-h="1080">
+            <span class="rp-thumb" style="aspect-ratio:1">◻</span>
+            <span class="rp-name">Instagram Post<br/><small>1080 × 1080</small></span>
+          </button>
+          <button class="resize-preset" data-w="1080" data-h="1920">
+            <span class="rp-thumb" style="aspect-ratio:9/16">▮</span>
+            <span class="rp-name">Story / Reel<br/><small>1080 × 1920</small></span>
+          </button>
+          <button class="resize-preset" data-w="1500" data-h="500">
+            <span class="rp-thumb" style="aspect-ratio:3/1">▬</span>
+            <span class="rp-name">Twitter Banner<br/><small>1500 × 500</small></span>
+          </button>
+          <!-- Video -->
+          <button class="resize-preset" data-w="1920" data-h="1080">
+            <span class="rp-thumb" style="aspect-ratio:16/9">▬</span>
+            <span class="rp-name">YouTube Thumb<br/><small>1920 × 1080</small></span>
+          </button>
+          <!-- Slides -->
+          <button class="resize-preset" data-w="1280" data-h="720">
+            <span class="rp-thumb" style="aspect-ratio:16/9">▬</span>
+            <span class="rp-name">Presentation<br/><small>1280 × 720</small></span>
+          </button>
+          <!-- Print -->
+          <button class="resize-preset" data-w="595" data-h="842">
+            <span class="rp-thumb" style="aspect-ratio:210/297">▮</span>
+            <span class="rp-name">A4 Portrait<br/><small>595 × 842</small></span>
+          </button>
+          <!-- Webpage -->
+          <button class="resize-preset" data-w="1440" data-h="900">
+            <span class="rp-thumb" style="aspect-ratio:8/5">▬</span>
+            <span class="rp-name">Webpage (HD)<br/><small>1440 × 900</small></span>
+          </button>
+          <button class="resize-preset" data-w="1366" data-h="768">
+            <span class="rp-thumb" style="aspect-ratio:16/9">▬</span>
+            <span class="rp-name">Webpage (Laptop)<br/><small>1366 × 768</small></span>
+          </button>
+          <!-- Portfolio -->
+          <button class="resize-preset" data-w="1200" data-h="800">
+            <span class="rp-thumb" style="aspect-ratio:3/2">▬</span>
+            <span class="rp-name">Portfolio<br/><small>1200 × 800</small></span>
+          </button>
+          <!-- Blog -->
+          <button class="resize-preset" data-w="1200" data-h="628">
+            <span class="rp-thumb" style="aspect-ratio:1.9/1">▬</span>
+            <span class="rp-name">Blog / OG Image<br/><small>1200 × 628</small></span>
+          </button>
+        </div>
+        <div class="resize-custom">
+          <div class="resize-field">
+            <label>Width (px)</label>
+            <input type="number" id="resizeW" class="input" value="1080" min="100" max="8000" />
+          </div>
+          <span class="resize-times">×</span>
+          <div class="resize-field">
+            <label>Height (px)</label>
+            <input type="number" id="resizeH" class="input" value="1080" min="100" max="8000" />
+          </div>
+        </div>
+      </div>
+      <div class="du-modal-foot">
+        <button class="btn btn-secondary" id="resizeCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="resizeApplyBtn">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CODE GENERATION MODAL ════════════════════════════ -->
+  <div class="modal-overlay hidden" id="codeModal">
+    <div class="du-modal du-modal-code">
+      <div class="du-modal-head">
+        <div class="code-modal-title">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 3L1 8l4 5M11 3l4 5-4 5M8 1.5l-1.5 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export Code
+        </div>
+        <div class="code-modal-actions">
+          <button class="code-copy-btn" id="codeCopyBtn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="4.5" y="1.5" width="7" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 4H2a1 1 0 0 0-1 1v6.5a1 1 0 0 0 1 1h6.5a1 1 0 0 0 1-1V11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Copy
+          </button>
+          <button class="code-dl-btn" id="codeDownloadBtn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M6.5 1v7M3.5 5.5 6.5 8.5l3-3M1.5 10v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download ZIP
+          </button>
+          <button class="modal-close-btn" id="codeClose">✕</button>
+        </div>
+      </div>
+
+      <!-- Code tabs -->
+      <div class="code-tabs">
+        <button class="code-tab active" data-lang="html">HTML</button>
+        <button class="code-tab" data-lang="css">CSS</button>
+        <button class="code-tab" data-lang="js">JavaScript</button>
+        <button class="code-tab" data-lang="react">React</button>
+        <button class="code-tab" data-lang="full">Full Page</button>
+      </div>
+
+      <!-- Options bar -->
+      <div class="code-options-bar">
+        <label class="code-opt">
+          <input type="checkbox" id="codeOptResponsive" checked />
+          <span>Responsive</span>
+        </label>
+        <label class="code-opt">
+          <input type="checkbox" id="codeOptAnimations" checked />
+          <span>Animations</span>
+        </label>
+        <label class="code-opt">
+          <input type="checkbox" id="codeOptComments" checked />
+          <span>Comments</span>
+        </label>
+        <label class="code-opt">
+          <input type="checkbox" id="codeOptPretty" checked />
+          <span>Formatted</span>
+        </label>
+        <span class="code-info" id="codeInfo">0 elements</span>
+      </div>
+
+      <!-- Code output -->
+      <div class="code-output-wrap">
+        <pre class="code-output" id="codeOutput"><code id="codeContent"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ AI SETTINGS MODAL ════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="aiSettingsModal">
+    <div class="du-modal du-modal-settings">
+      <div class="du-modal-head">
+        <span>⚙ AI Settings</span>
+        <button class="modal-close-btn" id="aiSettingsClose">✕</button>
+      </div>
+      <div class="du-modal-body">
+        <p class="ai-settings-desc">Connect your AI API key to unlock AI-powered design enhancement, analysis, and intelligent chat. Your key is stored locally — never sent to any server other than the provider you select.</p>
+
+        <div class="ai-settings-group">
+          <label class="ai-settings-label">AI Provider</label>
+          <div class="ai-provider-grid" id="aiProviderGrid">
+            <button class="ai-provider-btn" data-provider="openai">
+              <span class="apb-name">OpenAI</span>
+              <span class="apb-desc">GPT-4o, GPT-4 Turbo</span>
+            </button>
+            <button class="ai-provider-btn" data-provider="anthropic">
+              <span class="apb-name">Anthropic</span>
+              <span class="apb-desc">Claude Opus, Sonnet, Haiku</span>
+            </button>
+            <button class="ai-provider-btn" data-provider="gemini">
+              <span class="apb-name">Google Gemini</span>
+              <span class="apb-desc">Gemini 1.5 Pro, Flash</span>
+            </button>
+            <button class="ai-provider-btn" data-provider="openrouter">
+              <span class="apb-name">OpenRouter</span>
+              <span class="apb-desc">All models, one key</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ai-settings-group">
+          <label class="ai-settings-label">Model</label>
+          <select class="ai-settings-select" id="aiModelSelect">
+            <option value="">Select provider first…</option>
+          </select>
+        </div>
+
+        <div class="ai-settings-group">
+          <label class="ai-settings-label">API Key</label>
+          <div class="ai-key-row">
+            <input class="ai-key-input" type="password" id="aiKeyInput" placeholder="Paste your API key…" autocomplete="off" />
+            <button class="ai-key-toggle" id="aiKeyToggle" title="Show/hide key">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="4" stroke="currentColor" stroke-width="1.3"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="ai-settings-status" id="aiSettingsStatus"></div>
+
+        <div class="ai-settings-links">
+          <a class="ai-settings-link" href="https://platform.openai.com/api-keys" target="_blank">Get OpenAI key →</a>
+          <a class="ai-settings-link" href="https://console.anthropic.com/" target="_blank">Get Anthropic key →</a>
+          <a class="ai-settings-link" href="https://openrouter.ai/keys" target="_blank">Get OpenRouter key →</a>
+          <a class="ai-settings-link" href="https://aistudio.google.com/app/apikey" target="_blank">Get Gemini key →</a>
+        </div>
+      </div>
+      <div class="du-modal-foot">
+        <button class="btn btn-secondary" id="aiSettingsClear">Clear key</button>
+        <button class="btn btn-secondary" id="aiSettingsTest">Test connection</button>
+        <button class="btn btn-primary" id="aiSettingsSave">Save settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ENHANCEMENT RESULTS MODAL ════════════════════════════ -->
+  <div class="modal-overlay hidden" id="enhanceModal">
+    <div class="du-modal du-modal-enhance">
+      <div class="du-modal-head">
+        <div class="enhance-modal-title">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 5.2H16l-4.9 3.6 1.9 5.2L8 12.4 3 15l1.9-5.2L0 6.2h6.2z"/></svg>
+          AI Design Enhancement
+        </div>
+        <button class="modal-close-btn" id="enhanceClose">✕</button>
+      </div>
+
+      <!-- Loading state -->
+      <div class="enhance-loading" id="enhanceLoading">
+        <div class="enhance-spinner"></div>
+        <p class="enhance-loading-text" id="enhanceLoadingText">Analyzing your design…</p>
+        <p class="enhance-loading-sub">The AI is reviewing layout, hierarchy, typography and color</p>
+      </div>
+
+      <!-- Results state -->
+      <div class="enhance-results hidden" id="enhanceResults">
+        <!-- Score overview -->
+        <div class="enhance-scores" id="enhanceScores">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Summary -->
+        <div class="enhance-summary" id="enhanceSummary"></div>
+
+        <!-- Style picker for enhancement -->
+        <div class="enhance-style-row">
+          <span class="enhance-style-label">Apply style:</span>
+          <select class="enhance-style-select" id="enhanceStyleSelect">
+            <option value="">Auto (AI decides)</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" id="enhanceRerunBtn">↻ Re-run</button>
+        </div>
+
+        <!-- Changes list -->
+        <div class="enhance-changes-header">
+          <span>Proposed improvements</span>
+          <div class="enhance-changes-actions">
+            <button class="btn btn-ghost btn-xs" id="enhanceSelectAll">Select all</button>
+            <button class="btn btn-ghost btn-xs" id="enhanceDeselectAll">Deselect all</button>
+          </div>
+        </div>
+        <div class="enhance-changes-list" id="enhanceChangesList">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Palette suggestion -->
+        <div class="enhance-palette-section" id="enhancePaletteSection">
+          <span class="enhance-palette-label">Suggested palette:</span>
+          <div class="enhance-palette-swatches" id="enhancePaletteSwatches"></div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div class="enhance-error hidden" id="enhanceError">
+        <div class="enhance-error-icon">⚠</div>
+        <p class="enhance-error-text" id="enhanceErrorText"></p>
+        <div class="enhance-error-actions">
+          <button class="btn btn-ghost btn-sm" id="enhanceRetryBtn">Try again</button>
+          <button class="btn btn-secondary btn-sm" id="enhanceSettingsBtn">Open AI Settings</button>
+        </div>
+      </div>
+
+      <div class="du-modal-foot" id="enhanceFoot">
+        <button class="btn btn-secondary" id="enhanceCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="enhanceApplyBtn" disabled>Apply selected</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fabric.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+  <script src="js/theme.js?v=3"></script>
+  <script src="js/ai.js?v=3"></script>
+  <script src="js/builder.js?v=13"></script>
+</body>
+</html>

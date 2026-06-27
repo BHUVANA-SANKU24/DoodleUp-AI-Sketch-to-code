@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoodleUp! — Log in or Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" />
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/auth.css?v=2" />
+  <style>
+    html { background: #020308; }
+    body { background: transparent; color: #e8e6f0; margin: 0; }
+  </style>
+</head>
+<body>
+
+<div id="cursorGlowPrimary" aria-hidden="true"></div>
+<div id="cursorGlowSecondary" aria-hidden="true"></div>
+
+  <div class="auth-layout">
+
+    <!-- ── Left panel ────────────────────────────────── -->
+    <div class="auth-left">
+      <a href="index.html" class="doodle-logo auth-logo">Doodle<span class="logo-up">UP</span><span class="logo-dot">!</span></a>
+      <div class="auth-left-content">
+        <h2 class="auth-tagline">Design without limits.</h2>
+        <p class="auth-sub">Sketch, collaborate, and export code — all in one canvas.</p>
+        <div class="auth-feature-pills">
+          <div class="auth-pill">🎨 Infinite canvas</div>
+          <div class="auth-pill">⟨/⟩ Code export</div>
+          <div class="auth-pill">✦ AI assistant</div>
+          <div class="auth-pill">◎ Animations</div>
+        </div>
+      </div>
+      <div class="auth-bg-art">
+        <div class="art-circle art-c1"></div>
+        <div class="art-circle art-c2"></div>
+        <div class="art-circle art-c3"></div>
+        <div class="art-squiggle">
+          <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 60 C 40 10, 80 70, 120 30 S 180 10, 190 40" stroke="rgba(255,255,255,0.25)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Right panel ───────────────────────────────── -->
+    <div class="auth-right">
+      <div class="auth-card">
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabLogin">Log in</button>
+          <button class="auth-tab" id="tabRegister">Register</button>
+        </div>
+
+        <!-- ── Login form ─────────────────────────── -->
+        <form class="auth-form" id="loginForm" autocomplete="off">
+          <div class="auth-error hidden" id="loginError"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email</label>
+            <input class="input" type="email" id="loginEmail" placeholder="you@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">
+              Password
+              <a href="#" class="form-label-link">Forgot?</a>
+            </label>
+            <div class="input-wrap">
+              <input class="input" type="password" id="loginPassword" placeholder="Your password" required />
+              <button type="button" class="input-eye" id="loginEye" tabindex="-1">👁</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">
+            <span class="btn-label">Log in</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+
+          <div class="auth-divider"><span>or continue with</span></div>
+
+          <div class="oauth-row">
+            <button type="button" class="oauth-btn" onclick="demoLogin()">
+              <span>🎯</span> Demo account
+            </button>
+          </div>
+
+          <p class="auth-switch">No account? <a href="#" id="goRegister">Create one free →</a></p>
+        </form>
+
+        <!-- ── Register form ──────────────────────── -->
+        <form class="auth-form hidden" id="registerForm" autocomplete="off">
+          <div class="auth-error hidden" id="registerError"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="regName">Full name</label>
+            <input class="input" type="text" id="regName" placeholder="Your name" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email</label>
+            <input class="input" type="email" id="regEmail" placeholder="you@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password</label>
+            <div class="input-wrap">
+              <input class="input" type="password" id="regPassword" placeholder="At least 6 characters" required />
+              <button type="button" class="input-eye" id="regEye" tabindex="-1">👁</button>
+            </div>
+            <div class="pwd-strength">
+              <div class="pwd-bar" id="pwdBar"></div>
+            </div>
+            <span class="pwd-hint" id="pwdHint"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg" id="registerBtn">
+            <span class="btn-label">Create account</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+
+          <p class="auth-terms">By registering you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+          <p class="auth-switch">Already have an account? <a href="#" id="goLogin">Log in →</a></p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+  (function(){
+    const p=document.getElementById('cursorGlowPrimary'),s=document.getElementById('cursorGlowSecondary');
+    if(!p||!s)return;
+    let tx=window.innerWidth/2,ty=window.innerHeight/2,px=tx,py=ty,sx=tx,sy=ty;
+    document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;},{passive:true});
+    function loop(){
+      px+=(tx-px)*0.08;py+=(ty-py)*0.08;
+      sx+=(tx-sx)*0.15;sy+=(ty-sy)*0.15;
+      p.style.left=px+'px';p.style.top=py+'px';
+      s.style.left=sx+'px';s.style.top=sy+'px';
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+  </script>
+</body>
+</html>

@@ -103,52 +103,6 @@ flowchart TD
 
 ---
 
-## Getting Started
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/yourusername/ai-design-to-code.git
-cd ai-design-to-code
-```
-
-### 2. Set up the Python backend
-
-```bash
-cd backend
-pip install -r requirements.txt
-```
-
-### 3. Add your OpenAI API key
-
-```bash
-cp .env.example .env
-```
-
-Open `backend/.env` and replace the placeholder:
-
-```
-OPENAI_API_KEY=sk-your-actual-key-here
-```
-
-Get a key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-
-### 4. Start the server
-
-```bash
-uvicorn main:app --reload --port 8000
-```
-
-### 5. Open in browser
-
-```
-http://localhost:8000
-```
-
-That's it — no build tools, no npm install, no webpack.
-
----
-
 ## Project Structure
 
 ```
@@ -192,30 +146,3 @@ ai-design-to-code/
 
 The same pipeline handles code generation — GPT-4o receives the canvas JSON and returns HTML, CSS, and React code simultaneously.
 
----
-
-## Security
-
-- The OpenAI API key is stored in `backend/.env` and loaded server-side via `python-dotenv`
-- The key is **never** sent to or stored in the browser
-- `.env` is listed in `.gitignore` — it will never be pushed to GitHub
-- All AI requests go through the FastAPI proxy at `/api/ai/proxy`
-
----
-
-## Running in Production
-
-For deployment, replace uvicorn's dev server with gunicorn:
-
-```bash
-pip install gunicorn
-gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
-```
-
-Or deploy to **Railway**, **Render**, or **Fly.io** — add `OPENAI_API_KEY` as an environment variable in the platform dashboard.
-
----
-
-## License
-
-MIT — free to use, modify, and distribute.
